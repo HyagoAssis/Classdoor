@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property mixed $role
+ */
 class User extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
+
+    public const ROLE_ADMIN = 1;
+    public const ROLE_USER  = 2;
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
         'password',
     ];
 
@@ -45,4 +52,16 @@ class User extends Authenticatable
             'password'          => 'hashed',
         ];
     }
+
+    //region Methods
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === self::ROLE_USER;
+    }
+    //endregion
 }
