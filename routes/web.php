@@ -17,9 +17,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware('admin')->group(function () {
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');
-        })->middleware(['auth', 'verified'])->name('dashboard');
+        })->name('dashboard');
     });
-
 });
 
 require __DIR__ . '/auth.php';

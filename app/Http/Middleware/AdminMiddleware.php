@@ -19,6 +19,10 @@ class AdminMiddleware
             return $next($request);
         }
 
+        if ($request->json()) {
+            return response()->json(['error' => 'Unauthorized.'], Response::HTTP_UNAUTHORIZED);
+        }
+
         return redirect()->guest('/');
     }
 }
