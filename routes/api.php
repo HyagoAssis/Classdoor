@@ -10,5 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware('admin')->group(function () {
         Route::post('categories', Category\StoreController::class)->name('categories.store');
+        Route::delete('categories/{category}', Category\DeleteController::class)->name('categories.delete');
+        Route::get('categories', Category\IndexController::class)->name('categories.index');
     });
 });
