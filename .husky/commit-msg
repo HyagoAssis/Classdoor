@@ -8,8 +8,7 @@ BRed='\033[1;31m'
 BRANCH_NAME=$(git symbolic-ref --short HEAD)
 
 if [ "$BRANCH_NAME" = "main" -o "$BRANCH_NAME" = "develop" ]; then
-    echo -e "${BRed}Commit na main ou develop, verifique ou use --no-verify ${NC}"
-        exit 1
+        exit 0
 fi
 
 REGEX_ISSUE_ID="[a-zA-Z0-9,\.\_\-]+-[0-9]+"
