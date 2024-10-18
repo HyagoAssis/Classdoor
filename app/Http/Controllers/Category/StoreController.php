@@ -15,7 +15,8 @@ class StoreController extends Controller
     public function __invoke(StoreRequest $request): CategoryResource
     {
         $category = Category::create([
-            'name' => $request->name,
+            'name'                   => $request->name,
+            'classification_type_id' => $request->classification_type_id,
         ]);
 
         return CategoryResource::make($category);

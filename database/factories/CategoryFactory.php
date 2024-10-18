@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
+use App\Models\{Category, ClassificationType};
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +18,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
+            'name'                   => $this->faker->word(),
+            'classification_type_id' => ClassificationType::factory(),
         ];
     }
 }

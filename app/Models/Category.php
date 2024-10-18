@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
+use Illuminate\Support\Carbon;
 
 /**
  * Category
@@ -15,9 +16,9 @@ use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
  * @method static Builder|Category query()
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @method static Builder|Category onlyTrashed()
  * @method static Builder|Category whereCreatedAt($value)
  * @method static Builder|Category whereDeletedAt($value)
@@ -33,5 +34,5 @@ class Category extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'classification_type_id'];
 }
