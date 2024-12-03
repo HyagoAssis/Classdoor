@@ -11,7 +11,7 @@ class DeleteController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Category $category)
+    public function __invoke(Category $category): \Illuminate\Http\JsonResponse
     {
         $deleted = $category->delete();
 

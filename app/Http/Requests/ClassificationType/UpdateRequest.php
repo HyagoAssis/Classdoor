@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\ClassificationType;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * @property-read string $name;
- * @property mixed $classification_type_id
- */
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +23,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'                   => ['required'],
-            'classification_type_id' => ['required', 'exists:classification_types,id'],
+            'name' => 'required|string',
         ];
     }
 }

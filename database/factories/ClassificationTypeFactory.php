@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\{Category, ClassificationType};
+use App\Models\ClassificationType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Category>
+ * @extends Factory<ClassificationType>
  */
-class CategoryFactory extends Factory
+class ClassificationTypeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'                   => $this->faker->word(),
-            'classification_type_id' => ClassificationType::factory(),
+            'name' => $this->faker->word(),
         ];
     }
 }
