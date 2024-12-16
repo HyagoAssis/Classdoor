@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\{Category, ClassificationType};
+use App\Http\Controllers\{Category,
+    ClassifiableItem,
+    ClassificationType};
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/user', function (Request $request) {
@@ -22,5 +24,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('classification_types/{classificationType}', ClassificationType\UpdateController::class)->name('classification_types.update');
         Route::get('classification_types', ClassificationType\IndexController::class)->name('classification_types.index');
         //endregion
+
+        //region ClassifiableItem
+        Route::delete('classifiable_items/{classifiableItem}', ClassifiableItem\DeleteController::class)->name('classifiable_items.delete');
+        //endregion
     });
+
+    Route::post('classifiable_items', ClassifiableItem\StoreController::class)->name('classifiable_items.store');
+    //Route::get('classifiable_items', ClassifiableItem\IndexController::class)->name('classifiable_items.index');
+
 });
+
+Route::get('classifiable_items', ClassifiableItem\IndexController::class)->name('classifiable_items.index');

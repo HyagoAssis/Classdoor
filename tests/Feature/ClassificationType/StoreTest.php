@@ -47,7 +47,7 @@ describe('validation rules', function () {
     });
 });
 
-test('after creating we should return a status 201 with the created questions', function () {
+test('after creating we should return a status 201 with the created classification type', function () {
     $user = User::factory()->admin()->create();
 
     Sanctum::actingAs($user);

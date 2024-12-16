@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
+use Illuminate\Database\Eloquent\{Builder, SoftDeletes};
 use Illuminate\Support\Carbon;
 
 /**
@@ -27,9 +27,11 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Category whereUpdatedAt($value)
  * @method static Builder|Category withTrashed()
  * @method static Builder|Category withoutTrashed()
+ * @property int $classification_type_id
+ * @method static Builder|Category whereClassificationTypeId($value)
  * @mixin Eloquent
  */
-class Category extends Model
+class Category extends BaseModel
 {
     use HasFactory;
     use SoftDeletes;

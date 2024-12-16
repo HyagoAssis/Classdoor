@@ -1,17 +1,23 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin'       => Route::has('login'),
-        'canRegister'    => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion'     => PHP_VERSION,
-    ]);
-});
+    return Inertia::render('Site/Home');
+})->name('home');
+
+Route::get('/disciplinas', function () {
+    return Inertia::render('Site/DisciplinesList');
+})->name('disciplines');
+
+Route::get('/professores', function () {
+    return Inertia::render('Site/TeachersList');
+})->name('teachers');
+
+Route::get('/locais', function () {
+    return Inertia::render('Site/PlacesList');
+})->name('places');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware('admin')->group(function () {
