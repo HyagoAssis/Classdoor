@@ -15,8 +15,13 @@
             </div>
 
             <div>
-                <button class="btn btn-dark fw-bold me-2">Entrar</button>
-                <button class="btn btn-outline-dark fw-bold">Registrar</button>
+                <template v-if="$page.props.auth.user">
+                    <Link class="btn btn-dark fw-bold me-2" :href="route('login')">Meu Perfil</Link>
+                </template>
+                <template v-else>
+                    <Link class="btn btn-dark fw-bold me-2" :href="route('login')">Entrar</Link>
+                    <Link class="btn btn-outline-dark fw-bold" :href="route('register')">Registrar</Link>
+                </template>
             </div>
         </div>
     </nav>

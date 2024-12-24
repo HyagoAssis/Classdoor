@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\{ClassifiableItem, User};
+use App\Models\{ClassifiableItem, Classification, User};
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,13 +15,16 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name'  => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        //        User::factory()->create([
+        //            'name'  => 'Test User',
+        //            'email' => 'test@example.com',
+        //        ]);
 
         //        ClassifiableItem::factory(30)->create([
-        //            'classification_type_id' => User::class,
+        //            'classification_type_id' => 2,
         //        ]);
+
+        Classification::factory(30)->create();
+
     }
 }

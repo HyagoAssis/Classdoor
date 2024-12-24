@@ -17,7 +17,11 @@ class IndexController extends Controller
         $type = $request->input('type');
         $name = $request->input('name');
 
-        $data = ClassifiableItem::where(ClassifiableItem::column('classification_type_id'), $type)->paginate();
+        $data = ClassifiableItem::with(['classifications'])
+            ->when($type, function ($query, $type) {
+                $query->where(ClassifiableItem::column('classification_type_id'), $type);
+            })
+            ->paginate();
 
         return ClassifiableItemResource::collection($data);
     }

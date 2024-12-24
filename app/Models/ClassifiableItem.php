@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{SoftDeletes};
 
 /**
+ *
+ *
  * @property int $id
  * @property string $name
  * @property int $classification_type_id
@@ -13,7 +15,6 @@ use Illuminate\Database\Eloquent\{SoftDeletes};
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- *
  * @method static \Database\Factories\ClassifiableItemFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem newQuery()
@@ -28,7 +29,6 @@ use Illuminate\Database\Eloquent\{SoftDeletes};
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem withoutTrashed()
- *
  * @mixin \Eloquent
  */
 class ClassifiableItem extends BaseModel
@@ -39,4 +39,12 @@ class ClassifiableItem extends BaseModel
     protected $table = 'classifiable_items';
 
     protected $fillable = ['name', 'classification_type_id', 'created_by', 'created_at', 'updated_at'];
+
+    //region Relations
+    public function classifications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Classification::class);
+    }
+
+    //endregion
 }

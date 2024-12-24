@@ -1,7 +1,12 @@
 <template>
     <Head title="Locais"/>
     <SiteLayout>
-        <h1 class="fs-4 fw-bold mb-4">Explorar locais</h1>
+        <div class="flex-grid row">
+            <h1 class="fs-4 fw-bold mb-4 col-sm-8">Explorar locais</h1>
+            <div class="col-sm-4 text-end">
+                <button class="btn btn-dark">+ Novo Local</button>
+            </div>
+        </div>
         <ClassifiableList :type="3"/>
     </SiteLayout>
 </template>

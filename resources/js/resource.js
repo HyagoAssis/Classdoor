@@ -15,3 +15,4 @@ function resource(path, actions = {}) {
     );
 }
 export const classifiableItemService = resource('/api/classifiable_items');
+export const classificationService = resource('/api/classifications');

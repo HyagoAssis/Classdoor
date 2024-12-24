@@ -4,9 +4,9 @@
             <div class="card-body row">
                 <div class="col-sm-9">
                     <h1 class="card-title fw-bold">{{ item.name }}</h1>
-                    <span class="fw-bold primary-color">3.7<i class="bi-star-fill ms-1"/></span>
+                    <span class="fw-bold primary-color">{{item.avg_classification}}<i class="bi-star-fill ms-1"/></span>
                 </div>
-                <div class="col-sm-3 fw-bold">10 Avaliações</div>
+                <div class="col-sm-3 fw-bold">{{item.total_classification}} Avaliações</div>
             </div>
         </div>
     </DataList>

@@ -1,7 +1,12 @@
 <template>
     <Head title="Professores"/>
     <SiteLayout>
-        <h1 class="fs-4 fw-bold mb-4">Explorar professores</h1>
+        <div class="flex-grid row">
+            <h1 class="fs-4 fw-bold mb-4 col-sm-8">Explorar professores</h1>
+            <div class="col-sm-4 text-end">
+                <button class="btn btn-dark">+ Novo Professor</button>
+            </div>
+        </div>
         <ClassifiableList :type="2"/>
     </SiteLayout>
 </template>

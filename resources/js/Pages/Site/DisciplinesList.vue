@@ -2,7 +2,12 @@
     <Head title="Disciplinas" />
     <SiteLayout>
         <div class="container-sm">
-            <h1 class="fs-4 fw-bold mb-4">Explorar disciplinas</h1>
+            <div class="flex-grid row">
+                <h1 class="fs-4 fw-bold mb-4 col-sm-8">Explorar disciplinas</h1>
+                <div class="col-sm-4 text-end">
+                    <button class="btn btn-dark">+ Nova Disciplina</button>
+                </div>
+            </div>
             <ClassifiableList :type="1"/>
         </div>
     </SiteLayout>

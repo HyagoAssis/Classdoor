@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\{Category,
+use App\Http\Controllers\{
+    Category,
     ClassifiableItem,
-    ClassificationType};
+    Classification,
+    ClassificationType
+};
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/user', function (Request $request) {
@@ -31,8 +34,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     Route::post('classifiable_items', ClassifiableItem\StoreController::class)->name('classifiable_items.store');
-    //Route::get('classifiable_items', ClassifiableItem\IndexController::class)->name('classifiable_items.index');
+
+    Route::post('classifications', Classification\StoreController::class)->name('classifications.store');
 
 });
 
 Route::get('classifiable_items', ClassifiableItem\IndexController::class)->name('classifiable_items.index');
+Route::get('classifications', Classification\IndexController::class)->name('classifications.index');
