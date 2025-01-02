@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ClassifiableItem;
+namespace App\Http\Controllers\Api\ClassifiableItem;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClassifiableItemResource;

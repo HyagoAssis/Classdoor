@@ -46,5 +46,10 @@ class ClassifiableItem extends BaseModel
         return $this->hasMany(Classification::class);
     }
 
+    public function classificationType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ClassificationType::class);
+    }
+
     //endregion
 }

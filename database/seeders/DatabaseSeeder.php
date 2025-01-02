@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         //            'classification_type_id' => 2,
         //        ]);
 
-        Classification::factory(30)->create();
+        Classification::factory(30)->teacherClassifications()->create();
 
     }
 }

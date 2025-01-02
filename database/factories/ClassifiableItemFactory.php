@@ -19,7 +19,7 @@ class ClassifiableItemFactory extends Factory
     {
         return [
             'name'                   => $this->faker->name(),
-            'classification_type_id' => ClassificationType::factory()->create()->id,
+            'classification_type_id' => ClassificationType::factory(),
             'created_by'             => User::factory()->create(),
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ClassificationType;
+namespace App\Http\Controllers\Api\ClassificationType;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClassificationType;

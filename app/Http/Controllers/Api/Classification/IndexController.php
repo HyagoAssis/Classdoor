@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Classification;
+namespace App\Http\Controllers\Api\Classification;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClassificationResource;
@@ -19,7 +19,7 @@ class IndexController extends Controller
         $classifiableId = $request->input('classifiable_id');
         $name           = $request->input('name');
 
-        $data = Classification::when($type, function ($query, $type) {
+        $data = Classification::with(['classifiableItem.classificationType'])->when($type, function ($query, $type) {
             $query
                 ->join(ClassifiableItem::table(), ClassifiableItem::column('id'), Classification::column('classifiable_item_id'))
                 ->where(ClassifiableItem::column('classification_type_id'), $type);

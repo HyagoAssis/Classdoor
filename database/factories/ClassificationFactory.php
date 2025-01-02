@@ -24,4 +24,11 @@ class ClassificationFactory extends Factory
             'comment'              => $this->faker->text(),
         ];
     }
+
+    public function teacherClassifications(): ClassificationFactory|Factory
+    {
+        return $this->state(fn (array $attributes) => [
+            'classifiable_item_id' => ClassifiableItem::factory()->create(['classification_type_id' => 1]),
+        ]);
+    }
 }

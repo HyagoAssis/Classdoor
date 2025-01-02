@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\ClassificationType;
+namespace App\Http\Controllers\Api\ClassificationType;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClassificationTypeResource;
 use App\Models\ClassificationType;
-use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {

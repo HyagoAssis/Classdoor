@@ -1,7 +1,7 @@
 <template>
-    <Head title="Novo ----" />
+    <Head :title="title" />
     <SiteLayout>
-        <h1 class="fs-4 fw-bold mb-4">Novo ----</h1>
+        <h1 class="fs-4 fw-bold mb-4">{{title}}</h1>
     </SiteLayout>
 </template>
 
@@ -16,6 +16,16 @@ export default {
     name: 'Home',
     components: {DataList, Head, SiteLayout },
 
+    props: {
+        classifiableItem: {
+            type: Object
+        },
+        classificationType: {
+            type: Object,
+            required: true
+        }
+    },
+
     data(){
         return {
             method: classificationService.query,
@@ -26,6 +36,20 @@ export default {
                 perPage: 10
             },
             moment
+        }
+    },
+
+    created() {
+        console.log(this.classifiableItem);
+    },
+
+    computed: {
+        title(){
+            if(this.classifiableItem){
+                return this.classifiableItem.name;
+            }
+
+            return 'Novo '+ this.classificationType.name;
         }
     }
 

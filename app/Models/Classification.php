@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\{SoftDeletes};
+use Illuminate\Database\Eloquent\{Relations\BelongsTo, SoftDeletes};
 
 /**
- *
- *
  * @property int $id
  * @property int $value
  * @property string|null $comment
@@ -16,6 +14,7 @@ use Illuminate\Database\Eloquent\{SoftDeletes};
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ *
  * @method static \Database\Factories\ClassificationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Classification newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Classification newQuery()
@@ -31,6 +30,7 @@ use Illuminate\Database\Eloquent\{SoftDeletes};
  * @method static \Illuminate\Database\Eloquent\Builder|Classification whereValue($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Classification withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Classification withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Classification extends BaseModel
@@ -38,4 +38,11 @@ class Classification extends BaseModel
     use HasFactory;
     use softDeletes;
 
+    //region relations
+    public function classifiableItem(): BelongsTo
+    {
+        return $this->belongsTo(ClassifiableItem::class);
+    }
+
+    //endregion
 }

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\ClassificationType;
+namespace App\Http\Controllers\Api\ClassificationType;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClassificationType\StoreRequest;
 use App\Http\Resources\ClassificationTypeResource;
 use App\Models\ClassificationType;
-use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {

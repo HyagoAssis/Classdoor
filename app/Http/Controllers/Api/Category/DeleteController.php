@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\ClassifiableItem;
+namespace App\Http\Controllers\Api\Category;
 
 use App\Http\Controllers\Controller;
-use App\Models\ClassifiableItem;
-use Illuminate\Http\Request;
+use App\Models\Category;
 
 class DeleteController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(ClassifiableItem $classifiableItem): \Illuminate\Http\JsonResponse
+    public function __invoke(Category $category): \Illuminate\Http\JsonResponse
     {
-        $deleted = $classifiableItem->delete();
+        $deleted = $category->delete();
 
         return response()->json([
             'message' => $deleted ? 'Categoria deletada' : 'Erro ao deletar a categoria',

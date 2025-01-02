@@ -8,7 +8,7 @@
                     <button class="btn btn-dark">+ Nova Disciplina</button>
                 </div>
             </div>
-            <ClassifiableList :type="1"/>
+            <ClassifiableList :type="2"/>
         </div>
     </SiteLayout>
 </template>
