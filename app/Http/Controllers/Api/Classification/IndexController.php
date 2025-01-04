@@ -18,6 +18,12 @@ class IndexController extends Controller
         $type           = $request->input('type');
         $classifiableId = $request->input('classifiable_id');
         $name           = $request->input('name');
+        $filterUser     = $request->input('filterUser', false);
+        $user           = null;
+
+        if ($filterUser) {
+            $user = auth()->user();
+        }
 
         $data = Classification::with(['classifiableItem.classificationType'])->when($type, function ($query, $type) {
             $query
@@ -26,9 +32,12 @@ class IndexController extends Controller
         })->when($classifiableId, function ($query, $classifiableId) {
             $query->where(Classification::column('classifiable_item_id'), $classifiableId);
         })
-//            ->when($name, function ($query, $name) {
-//
-//        })
+            ->when($name, function ($query, $name) {
+                $query->where(ClassifiableItem::column('name'), $name);
+            })
+            ->when($filterUser, function ($query) use ($user) {
+                $query->where(Classification::column('user_id'), $user->id);
+            })
             ->orderBy(Classification::column('created_at'), 'desc')
             ->paginate($perPage);
 

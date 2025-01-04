@@ -1,5 +1,6 @@
 <template>
-    <template v-if="!items || items.length === 0">
+    <Spinner v-if="requests"/>
+    <template v-else-if="!items || items.length === 0">
         <p>Nenhum resultado encontrado</p>
     </template>
     <template v-else>
@@ -37,9 +38,12 @@
 </template>
 
 <script>
+import Spinner from "@/Components/Site/Spinner.vue";
+
 const CancelToken = axios.CancelToken;
 export default {
     name: 'DataList',
+    components: {Spinner},
 
     props: {
         method: {
@@ -52,6 +56,7 @@ export default {
 
     data() {
         return {
+            requests: 0,
             items: null,
             pagination: {
                 perPage: null,
@@ -94,6 +99,8 @@ export default {
                 this.requestCancelToken = undefined;
             }
 
+            this.requests++;
+
             this.requestCancelToken = CancelToken.source();
 
             this.method({page: this.pagination.currentPage, ...this.params}, {
@@ -110,7 +117,7 @@ export default {
                         confirmButtonText: 'Ok'
                     });
                 }
-            })
+            }).then(() => this.requests--);
         },
 
         updatePagination(resourcePagination) {
@@ -133,6 +140,11 @@ export default {
 
         pages() {
             let pages = [1];
+
+            if(this.totalPages === 1){
+                return pages;
+            }
+
             let middle = [];
 
             for (

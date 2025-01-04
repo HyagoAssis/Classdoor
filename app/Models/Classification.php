@@ -38,6 +38,8 @@ class Classification extends BaseModel
     use HasFactory;
     use softDeletes;
 
+    protected $fillable = ['value', 'comment', 'classifiable_item_id'];
+
     //region relations
     public function classifiableItem(): BelongsTo
     {

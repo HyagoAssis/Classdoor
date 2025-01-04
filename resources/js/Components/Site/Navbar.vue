@@ -16,7 +16,9 @@
 
             <div>
                 <template v-if="$page.props.auth.user">
-                    <Link class="btn btn-dark fw-bold me-2" :href="route('login')">Meu Perfil</Link>
+                    <Link class="btn btn-dark fw-bold me-2" :href="route('profile')">Meu Perfil</Link>
+                    <button class="btn btn-outline-dark fw-bold" @click="logout">Sair</button>
+
                 </template>
                 <template v-else>
                     <Link class="btn btn-dark fw-bold me-2" :href="route('login')">Entrar</Link>
@@ -31,12 +33,18 @@
 
 import {Link} from "@inertiajs/vue3";
 import NavSiteLink from "@/Components/Site/NavSiteLink.vue";
+import {router} from "@inertiajs/vue3";
 export default {
     name: 'Navbar',
 
     components: {
         NavSiteLink,
         Link
+    },
+    methods:{
+        logout(){
+            router.post('/logout');
+        }
     }
 }
 

@@ -4,7 +4,7 @@
         <div class="flex-grid row">
             <h1 class="fs-4 fw-bold mb-4 col-sm-8">Explorar locais</h1>
             <div class="col-sm-4 text-end">
-                <Link class="btn btn-dark" :href="route('classifiable_manager')">+ Novo Local</Link>
+                <Link class="btn btn-dark" :href="route('classifiable_manager.new', {'type' : 'place'})">+ Novo Local</Link>
             </div>
         </div>
         <ClassifiableList :type="3"/>

@@ -1,7 +1,7 @@
 <template>
-    <Head title="Página Inicial" />
+    <Head title="Perfil" />
     <SiteLayout>
-        <h1 class="fs-4 fw-bold mb-4">Últimas avaliações</h1>
+        <h1 class="fs-4 fw-bold mb-4">Minhas avaliações</h1>
         <DataList :method="method" :params="params" v-slot="{ item: item }">
             <div class="card mb-1">
                 <div class="card-body row">
@@ -25,14 +25,15 @@ import {classificationService} from "@/resource.js";
 import moment from "moment";
 
 export default {
-    name: 'Home',
+    name: 'Profile',
     components: {DataList, Head, SiteLayout },
 
     data(){
         return {
             method: classificationService.query,
             params: {
-                perPage: 10
+                perPage: 10,
+                filterUser: true
             },
             moment
         }
