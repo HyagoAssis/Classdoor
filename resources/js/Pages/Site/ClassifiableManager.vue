@@ -19,11 +19,11 @@
             <template v-else>
                 <div class="mb-4 row">
                     <div class="col-sm-2 text-center">
-                        <span class="fw-bold primary-color me-1">10<i class="bi-star-fill ms-1"/></span>
+                        <span class="fw-bold primary-color me-1">{{ classifiableItem.avg_classification}}<i class="bi-star-fill ms-1"/></span>
                         <p class="text-secondary">Avaliação Média</p>
                     </div>
                     <div class="col-sm-2 text-center">
-                        <strong>10</strong>
+                        <strong>{{ classifiableItem.total_classification}}</strong>
                         <p class="text-secondary">Avaliações</p>
                     </div>
                 </div>

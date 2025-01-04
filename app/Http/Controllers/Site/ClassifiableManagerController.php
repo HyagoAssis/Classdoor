@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\Models\{ClassifiableItem, ClassificationType};
+use App\Models\{ClassifiableItem, Classification, ClassificationType};
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,7 +19,10 @@ class ClassifiableManagerController extends Controller
         $type = null;
 
         if ($classifiableItem->id) {
-            $classifiableItem->load('classificationType');
+            $classifiableItem->load(['classificationType', 'classifications']);
+
+            $classifiableItem->avg_classification   = round($classifiableItem->classifications()->avg(Classification::column('value')) ?? 0, 2);
+            $classifiableItem->total_classification = $classifiableItem->classifications()->count();
 
             $type = $classifiableItem->classificationType;
         } else {

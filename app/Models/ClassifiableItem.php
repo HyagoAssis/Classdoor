@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\{SoftDeletes};
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed $classificationType
+ * @property int|mixed $total_classification
+ * @property mixed $avg_classification
  * @method static \Database\Factories\ClassifiableItemFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem newQuery()
