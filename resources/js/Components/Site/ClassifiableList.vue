@@ -4,7 +4,7 @@
             <div class="card-body row">
                 <div class="col-sm-9">
                     <h1 class="card-title fw-bold">{{ item.name }}</h1>
-                    <span class="fw-bold primary-color">{{item.avg_classification}}<i class="bi-star-fill ms-1"/></span>
+                    <StarValue :value="item.avg_classification" />
                 </div>
                 <div class="col-sm-3 fw-bold">{{item.total_classification}} Avaliações</div>
             </div>
@@ -16,10 +16,11 @@
 import {classifiableItemService} from "@/resource.js";
 import DataList from "@/Components/Site/DataList.vue";
 import {Link} from "@inertiajs/vue3";
+import StarValue from "@/Components/Site/ValueStar.vue";
 
 export default {
     name: 'ClassifiableList',
-    components: {DataList, Link},
+    components: {StarValue, DataList, Link},
 
     props: {
         type: {

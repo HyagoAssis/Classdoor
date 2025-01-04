@@ -10,7 +10,7 @@
                         <p>{{ item.comment }}</p>
                         <small class="text-secondary">{{ moment(item.created_at).format('DD/MM/YYYY H:mm')}}</small>
                     </div>
-                    <div class="col-sm-1 fw-bold"><span class="fw-bold primary-color">{{ item.value }}<i class="bi-star-fill ms-1"/></span></div>
+                    <div class="col-sm-1 fw-bold"><StarValue :value="item.value" /></div>
                 </div>
             </div>
         </DataList>
@@ -23,10 +23,11 @@ import SiteLayout from "@/Layouts/SiteLayout.vue";
 import DataList from "@/Components/Site/DataList.vue";
 import {classificationService} from "@/resource.js";
 import moment from "moment";
+import StarValue from "@/Components/Site/ValueStar.vue";
 
 export default {
     name: 'Home',
-    components: {DataList, Head, SiteLayout },
+    components: {StarValue, DataList, Head, SiteLayout },
 
     data(){
         return {

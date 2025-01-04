@@ -19,7 +19,7 @@
             <template v-else>
                 <div class="mb-4 row">
                     <div class="col-sm-2 text-center">
-                        <span class="fw-bold primary-color me-1">{{ classifiableItem.avg_classification}}<i class="bi-star-fill ms-1"/></span>
+                        <StarValue :value="classifiableItem.avg_classification" />
                         <p class="text-secondary">Avaliação Média</p>
                     </div>
                     <div class="col-sm-2 text-center">
@@ -82,6 +82,7 @@ import {classifiableItemService, classificationService} from "@/resource.js";
 import {router} from "@inertiajs/vue3";
 import moment from "moment";
 import Spinner from "@/Components/Site/Spinner.vue";
+import StarValue from "@/Components/Site/ValueStar.vue";
 
 const DEFAULT_CLASSIFIABLE = {
     name: null,
@@ -96,7 +97,7 @@ const DEFAULT_CLASSIFICATION = {
 
 export default {
     name: 'ClassifiableManager',
-    components: {Spinner, Link, DataList, Head, SiteLayout},
+    components: {StarValue, Spinner, Link, DataList, Head, SiteLayout},
 
     props: {
         classifiableItem: {
