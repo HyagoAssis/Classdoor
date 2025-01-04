@@ -52,8 +52,8 @@ return [
     |
     */
 
-    'url'       => env('APP_URL', 'classdoor.test'),
-    'url_admin' => env('ADMIN_URL', 'admin.classdoor.test'),
+    'url'       => env('APP_URL', 'http://classdoor.test'),
+    'url_admin' => env('ADMIN_URL', 'http://admin.classdoor.test'),
 
     /*
     |--------------------------------------------------------------------------

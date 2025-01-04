@@ -103,7 +103,12 @@ export default {
                 this.updatePagination(response.data.meta);
             }).catch((error) => {
                 if (!axios.isCancel(error)) {
-                    console.log('Não foi possível carregar!');
+                    this.$swal.fire({
+                        title: 'Erro!',
+                        text: 'Não foi possível carregar os resultados',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
                 }
             })
         },

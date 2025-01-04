@@ -33,6 +33,6 @@ Route::group(['domain' => config('app.url')], function () {
         Route::get('/classificado/novo', ClassifiableManagerController::class)->name('classifiable_manager.new');
         Route::get('/classificado/{classifiableItem}', ClassifiableManagerController::class)->name('classifiable_manager.show');
     });
-});
 
-require __DIR__ . '/auth.php';
+    require __DIR__ . '/auth.php';
+});
