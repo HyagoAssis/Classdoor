@@ -6,6 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body, #app {
+    height: 100%;
+}
+
 :root {
     --primary-color: #0CAA41
 }

@@ -57,15 +57,21 @@
                     <h1 class="fs-5 fw-bold mb-4 col-sm-8">Últimas avaliações</h1>
                 </div>
                 <DataList :method="method" :params="params" v-slot="{ item: item }">
-                    <div class="card mb-1">
-                        <div class="card-body row">
-                            <div class="col-sm-11">
-                                <p>{{ item.comment }}</p>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row mb-lg-2">
+                                <div class="col-sm-11">
+                                    <p>{{ item.comment }}</p>
+                                </div>
+                                <div class="col-sm-1 text-end">
+                                    <StarValue :value="item.value" />
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
                                 <small
                                     class="text-secondary">{{ moment(item.created_at).format('DD/MM/YYYY H:mm') }}</small>
+                                <a class="text-danger small" href="#">Denunciar</a>
                             </div>
-                            <div class="col-sm-1 fw-bold"><span class="fw-bold primary-color">{{ item.value }}<i
-                                class="bi-star-fill ms-1"/></span></div>
                         </div>
                     </div>
                 </DataList>

@@ -19,6 +19,7 @@ import SiteLayout from "@/Layouts/SiteLayout.vue";
 import DataList from "@/Components/Site/DataList.vue";
 import ClassifiableList from "@/Components/Site/ClassifiableList.vue";
 import {Link} from "@inertiajs/vue3";
+
 export default {
     name: 'DisciplinesList',
     components: {Link,ClassifiableList, DataList, Head, SiteLayout },

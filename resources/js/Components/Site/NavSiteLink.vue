@@ -1,7 +1,7 @@
 <template>
     <li class="nav-item">
         <Link class="nav-link" aria-current="page" :href="route(routeName)"
-              :class="{active: route().current(routeName)}">{{ title }}
+              :class="route().current(routeName) ? 'text-light' : 'text-white-50'">{{ title }}
         </Link>
     </li>
 </template>

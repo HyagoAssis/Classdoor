@@ -3,14 +3,25 @@
     <SiteLayout>
         <h1 class="fs-4 fw-bold mb-4">Últimas avaliações</h1>
         <DataList :method="method" :params="params" v-slot="{ item: item }">
-            <div class="card mb-1">
-                <div class="card-body row">
-                    <div class="col-sm-11">
-                        <h1 class="card-title fw-bold">{{ item.classifiable_item.name }}  <span class="text-secondary">{{ item.classifiable_item.classification_type.name }} </span></h1>
-                        <p>{{ item.comment }}</p>
-                        <small class="text-secondary">{{ moment(item.created_at).format('DD/MM/YYYY H:mm')}}</small>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row mb-lg-4">
+                        <div class="col-11 d-inline-block">
+                            <div class="mb-2">
+                                <Link class="fw-bold" :href="route('classifiable_manager.show', {'classifiableItem' : item.classifiable_item_id})">{{ item.classifiable_item.name }}</Link>
+                                <p class="text-secondary">#{{ item.classifiable_item.classification_type.name }}</p>
+                            </div>
+
+                            <p class="text-secondary-emphasis">{{ item.comment }}</p>
+                        </div>
+                        <div class="col-1 text-end">
+                            <StarValue :value="item.value"/>
+                        </div>
                     </div>
-                    <div class="col-sm-1 fw-bold"><StarValue :value="item.value" /></div>
+                    <div class="d-flex justify-content-between">
+                        <small class="text-secondary">{{ moment(item.created_at).format('DD/MM/YYYY H:mm')}}</small>
+                        <a class="text-danger small" href="#">Denunciar</a>
+                    </div>
                 </div>
             </div>
         </DataList>
@@ -24,10 +35,12 @@ import DataList from "@/Components/Site/DataList.vue";
 import {classificationService} from "@/resource.js";
 import moment from "moment";
 import StarValue from "@/Components/Site/ValueStar.vue";
+import {Link} from "@inertiajs/vue3";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 export default {
     name: 'Home',
-    components: {StarValue, DataList, Head, SiteLayout },
+    components: {AuthenticatedLayout, StarValue, DataList, Head, SiteLayout, Link },
 
     data(){
         return {

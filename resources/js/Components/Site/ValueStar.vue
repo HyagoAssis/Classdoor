@@ -1,9 +1,7 @@
-<script setup>
-
-</script>
-
 <template>
-    <span class="fw-bold" :class="textColor">{{ value }}<i class="bi-star-fill ms-1"/></span>
+    <div :class="textColor" class="d-inline-block rounded p-2">
+        <span class="fw-bold"><i class="bi-star-fill me-1"/>{{ value }}</span>
+    </div>
 </template>
 
 <script>
@@ -20,14 +18,14 @@ export default {
     computed: {
       textColor(){
           if(this.value <= 1){
-              return 'text-danger';
+              return 'text-danger bg-danger-subtle';
           }
 
           if(this.value >= 2 && this.value <= 3){
-              return 'text-warning';
+              return 'text-warning bg-warning-subtle';
           }
 
-          return 'primary-color'
+          return 'text-success bg-success-subtle'
       }
     }
 }
