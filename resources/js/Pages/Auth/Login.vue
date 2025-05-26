@@ -55,7 +55,7 @@ const submit = () => {
             </div>
 
             <div class="tw-mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Senha" />
 
                 <TextInput
                     id="password"
@@ -72,7 +72,7 @@ const submit = () => {
             <div class="tw-block tw-mt-4">
                 <label class="tw-flex tw-items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="tw-ms-2 tw-text-sm tw-text-gray-600">Remember me</span>
+                    <span class="tw-ms-2 tw-text-sm tw-text-gray-600">Lembrar-me</span>
                 </label>
             </div>
 
@@ -82,11 +82,11 @@ const submit = () => {
                     :href="route('password.request')"
                     class="tw-underline tw-text-sm tw-text-gray-600 tw-hover:tw-text-gray-900 tw-rounded-md tw-focus:tw-outline-none tw-focus:tw-ring-2 tw-focus:tw-ring-offset-2 tw-focus:tw-ring-indigo-500"
                 >
-                    Forgot your password?
+                    Esqueceu sua senha?
                 </Link>
 
                 <PrimaryButton class="tw-ms-4" :class="{ 'tw-opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
+                    Entrar
                 </PrimaryButton>
             </div>
         </form>

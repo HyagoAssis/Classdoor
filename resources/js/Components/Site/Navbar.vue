@@ -18,7 +18,6 @@
                 <template v-if="$page.props.auth.user">
                     <Link class="btn btn-light fw-bold me-2" :href="route('profile')">Meu Perfil</Link>
                     <button class="btn btn-outline-light fw-bold" @click="logout">Sair</button>
-
                 </template>
                 <template v-else>
                     <Link class="btn btn-light fw-bold me-2" :href="route('login')">Entrar</Link>
@@ -26,6 +25,7 @@
                 </template>
             </div>
         </div>
+        <Link class="btn btn-danger fw-bold position-absolute end-0 me-3" :href="route('complaints')">Denúncias</Link>
     </nav>
 </template>
 

@@ -29,10 +29,16 @@ Route::group(['domain' => config('app.url')], function () {
         return Inertia::render('Site/PlacesList');
     })->name('places');
 
+    Route::get('/denuncias', function () {
+        return Inertia::render('Site/Complaints');
+    })->name('complaints')->middleware(['auth:sanctum', 'verified']);
+
     Route::get('/perfil', function () {
         return Inertia::render('Site/Profile');
     })->name('profile')->middleware(['auth:sanctum', 'verified']);
+
     Route::get('/classificado/novo', ClassifiableManagerController::class)->name('classifiable_manager.new')->middleware(['auth:sanctum', 'verified']);
+
     Route::get('/classificado/{classifiableItem}', ClassifiableManagerController::class)->name('classifiable_manager.show');
 
     require __DIR__ . '/auth.php';

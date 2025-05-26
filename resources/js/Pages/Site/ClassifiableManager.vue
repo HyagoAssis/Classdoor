@@ -17,40 +17,49 @@
                 </div>
             </template>
             <template v-else>
-                <div class="mb-4 row">
-                    <div class="col-sm-2 text-center">
-                        <StarValue :value="classifiableItem.avg_classification" />
-                        <p class="text-secondary">Avaliação Média</p>
-                    </div>
-                    <div class="col-sm-2 text-center">
-                        <strong>{{ classifiableItem.total_classification}}</strong>
-                        <p class="text-secondary">Avaliações</p>
-                    </div>
-                </div>
-                <div class="form-control mb-4 ps-3 pe-3">
-                    <h1 class="fs-5 fw-bold mb-4 mt-2 col-sm-8">Inserir uma avaliação</h1>
-
-                    <div class="row mb-4">
-                        <div class="col-sm-4">
-                            <label>Avaliação:</label>
-                            <select class="form-control form-select-sm rounded" v-model="classification.value">
-                                <option selected :value="null">Insira um valor</option>
-                                <option :value="1">1 Estrela</option>
-                                <option :value="2">2 Estrelas</option>
-                                <option :value="3">3 Estrelas</option>
-                                <option :value="4">4 Estrelas</option>
-                                <option :value="5">5 Estrelas</option>
-                            </select>
+                <div class="row">
+                    <div class="col-sm-2 mt-lg-4">
+                        <div class="text-center mb-3">
+                            <StarValue :value="classifiableItem.avg_classification"/>
+                            <p class="text-secondary">Avaliação Média</p>
                         </div>
-
-                        <div class="col-sm-8">
-                            <label>Comentário: </label>
-                            <textarea class="form-control rounded" v-model="classification.comment"></textarea>
+                        <div class="text-center">
+                            <div class="d-inline-block rounded p-2 bg-secondary-subtle">
+                                <i class="bi-pen-fill me-1"/>
+                                <strong>{{ classifiableItem.total_classification }}</strong>
+                            </div>
+                            <p class="text-secondary">Avaliações</p>
                         </div>
                     </div>
-                    <div class="text-end mt-2">
-                        <small class="text-danger me-2" v-if="cantSaveMessage">{{ cantSaveMessage}}</small>
-                        <button class="btn btn-dark" @click="saveClassification" :class="{disabled: !canMakeClassification}">Inserir</button>
+                    <div class="col-sm-10">
+                        <div class="form-control mb-4 ps-3 pe-3">
+                            <h1 class="fs-5 fw-bold mb-4 mt-2 col-sm-8">Inserir uma nova avaliação</h1>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>Avaliação:</label>
+                                    <select class="form-control form-select-sm rounded" v-model="classification.value">
+                                        <option selected :value="null">Insira um valor</option>
+                                        <option :value="1">1 Estrela</option>
+                                        <option :value="2">2 Estrelas</option>
+                                        <option :value="3">3 Estrelas</option>
+                                        <option :value="4">4 Estrelas</option>
+                                        <option :value="5">5 Estrelas</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-8">
+                                    <label>Comentário: </label>
+                                    <textarea class="form-control rounded" v-model="classification.comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="text-end mt-2">
+                                <small class="text-danger me-2" v-if="cantSaveMessage">{{ cantSaveMessage }}</small>
+                                <button class="btn btn-dark" @click="saveClassification"
+                                        :class="{disabled: !canMakeClassification}">Inserir
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="flex-grid row">
@@ -64,13 +73,15 @@
                                     <p>{{ item.comment }}</p>
                                 </div>
                                 <div class="col-sm-1 text-end">
-                                    <StarValue :value="item.value" />
+                                    <StarValue :value="item.value"/>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <small
-                                    class="text-secondary">{{ moment(item.created_at).format('DD/MM/YYYY H:mm') }}</small>
-                                <a class="text-danger small" href="#">Denunciar</a>
+                                    class="text-secondary">{{
+                                        moment(item.created_at).format('DD/MM/YYYY H:mm')
+                                    }}</small>
+                                <a class="fw-bold text-danger small" href="#">Denunciar</a>
                             </div>
                         </div>
                     </div>
@@ -151,24 +162,24 @@ export default {
             }
         },
 
-        typeName(){
+        typeName() {
             return this.classificationType.name;
         },
 
-        canMakeClassification(){
-          return this.classification.comment && this.classification.value && this.$page.props.auth.user;
+        canMakeClassification() {
+            return this.classification.comment && this.classification.value && this.$page.props.auth.user;
         },
 
-        cantSaveMessage(){
-          if(!this.$page.props.auth.user){
-              return 'Necessário estar logado para salvar uma classificação'
-          }
+        cantSaveMessage() {
+            if (!this.$page.props.auth.user) {
+                return 'Necessário estar logado para salvar uma classificação'
+            }
 
-          if (!this.classification.comment || !this.classification.value){
-              return 'Necessário preencher os campos!'
-          }
+            if (!this.classification.comment || !this.classification.value) {
+                return 'Necessário preencher os campos!'
+            }
 
-          return null;
+            return null;
         }
     },
     methods: {
@@ -185,7 +196,7 @@ export default {
                         confirmButtonText: 'Ok'
                     });
 
-                    this.classification = { ...DEFAULT_CLASSIFICATION};
+                    this.classification = {...DEFAULT_CLASSIFICATION};
                 }
             }).catch(() => {
                 this.$swal.fire({

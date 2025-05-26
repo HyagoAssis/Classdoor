@@ -26,8 +26,7 @@ const submit = () => {
         <Head title="Forgot Password" />
 
         <div class="tw-mb-4 tw-text-sm tw-text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset
-            link that will allow you to choose a new one.
+            Esqueceu sua senha? Sem problemas. Basta nos informar seu endereço de e-mail e enviaremos um link para redefinição de senha que permitirá que você escolha uma nova..
         </div>
 
         <div v-if="status" class="tw-mb-4 tw-font-medium tw-text-sm tw-text-green-600">
@@ -53,7 +52,7 @@ const submit = () => {
 
             <div class="tw-flex tw-items-center tw-justify-end tw-mt-4">
                 <PrimaryButton :class="{ 'tw-opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
+                    Enviar email
                 </PrimaryButton>
             </div>
         </form>
