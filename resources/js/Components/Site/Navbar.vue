@@ -12,20 +12,20 @@
                     <NavSiteLink title="Professores" route-name="teachers" />
                     <NavSiteLink title="Locais" route-name="places" />
                 </ul>
-            </div>
 
-            <div>
-                <template v-if="$page.props.auth.user">
-                    <Link class="btn btn-light fw-bold me-2" :href="route('profile')">Meu Perfil</Link>
-                    <button class="btn btn-outline-light fw-bold" @click="logout">Sair</button>
-                </template>
-                <template v-else>
-                    <Link class="btn btn-light fw-bold me-2" :href="route('login')">Entrar</Link>
-                    <Link class="btn btn-outline-light fw-bold" :href="route('register')">Registrar</Link>
-                </template>
+                <div class="text-end">
+                    <template v-if="$page.props.auth.user">
+                        <Link class="btn btn-light fw-bold me-2" :href="route('profile')">Meu Perfil</Link>
+                        <button class="btn btn-outline-light fw-bold me-2" @click="logout">Sair</button>
+                        <Link class="btn btn-danger fw-bold end-0" :href="route('complaints')">Denúncias</Link>
+                    </template>
+                    <template v-else>
+                        <Link class="btn btn-light fw-bold me-2" :href="route('login')">Entrar</Link>
+                        <Link class="btn btn-outline-light fw-bold" :href="route('register')">Registrar</Link>
+                    </template>
+                </div>
             </div>
         </div>
-        <Link class="btn btn-danger fw-bold position-absolute end-0 me-3" :href="route('complaints')">Denúncias</Link>
     </nav>
 </template>
 
@@ -41,10 +41,11 @@ export default {
         NavSiteLink,
         Link
     },
+
     methods:{
         logout(){
             router.post('/logout');
-        }
+        },
     }
 }
 

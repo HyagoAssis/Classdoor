@@ -14,13 +14,20 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $type = $request->input('type');
-        $name = $request->input('name');
+        $type  = $request->input('type');
+        $name  = $request->input('search');
+        $value = $request->input('value');
 
         $data = ClassifiableItem::with(['classifications'])
             ->join(Classification::table(), Classification::column('classifiable_item_id'), ClassifiableItem::column('id'))
             ->when($type, function ($query, $type) {
                 $query->where(ClassifiableItem::column('classification_type_id'), $type);
+            })
+            ->when($name, function ($query, $name) {
+                $query->where(ClassifiableItem::column('name'), 'LIKE', '%' . $name . '%');
+            })
+            ->when($value, function ($query, $value) {
+                $query->having('avg_classification', $value);
             })
             ->select([
                 ClassifiableItem::column('*'),

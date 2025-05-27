@@ -14,29 +14,39 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $perPage        = $request->query('perPage', 10);
-        $type           = $request->input('type');
-        $classifiableId = $request->input('classifiable_id');
-        $name           = $request->input('name');
-        $filterUser     = $request->input('filterUser', false);
-        $user           = null;
+        $perPage              = $request->query('perPage', 10);
+        $type                 = $request->input('type');
+        $classifiableId       = $request->input('classifiable_id');
+        $name                 = $request->input('search');
+        $filterUser           = $request->input('filterUser', false);
+        $user                 = null;
+        $value                = $request->input('value', null);
+        $classificationSearch = $request->input('classification_search', false);
 
         if ($filterUser) {
             $user = auth()->user();
         }
 
-        $data = Classification::with(['classifiableItem.classificationType'])->when($type, function ($query, $type) {
-            $query
-                ->join(ClassifiableItem::table(), ClassifiableItem::column('id'), Classification::column('classifiable_item_id'))
-                ->where(ClassifiableItem::column('classification_type_id'), $type);
-        })->when($classifiableId, function ($query, $classifiableId) {
-            $query->where(Classification::column('classifiable_item_id'), $classifiableId);
-        })
+        $data = Classification::with(['classifiableItem.classificationType'])
+            ->join(ClassifiableItem::table(), ClassifiableItem::column('id'), Classification::column('classifiable_item_id'))
+            ->when($type, function ($query, $type) {
+                $query
+                    ->where(ClassifiableItem::column('classification_type_id'), $type);
+            })
+            ->when($classifiableId, function ($query, $classifiableId) {
+                $query->where(Classification::column('classifiable_item_id'), $classifiableId);
+            })
             ->when($name, function ($query, $name) {
-                $query->where(ClassifiableItem::column('name'), $name);
+                $query->where(ClassifiableItem::column('name'), 'like', '%' . $name . '%');
             })
             ->when($filterUser, function ($query) use ($user) {
                 $query->where(Classification::column('user_id'), $user->id);
+            })
+            ->when($value, function ($query) use ($value) {
+                $query->where(Classification::column('value'), $value);
+            })
+            ->when($classificationSearch, function ($query) use ($classificationSearch) {
+                $query->where(Classification::column('comment'), 'LIKE', '%' . $classificationSearch . '%');
             })
             ->orderBy(Classification::column('created_at'), 'desc')
             ->paginate($perPage);

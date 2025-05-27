@@ -37,8 +37,8 @@
 
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <label>Avaliação:</label>
-                                    <select class="form-control form-select-sm rounded" v-model="classification.value">
+                                    <label for="type ">Avaliação:</label>
+                                    <select id='type' class="form-control form-select-sm rounded" v-model="classification.value">
                                         <option selected :value="null">Insira um valor</option>
                                         <option :value="1">1 Estrela</option>
                                         <option :value="2">2 Estrelas</option>
@@ -65,14 +65,33 @@
                 <div class="flex-grid row">
                     <h1 class="fs-5 fw-bold mb-4 col-sm-8">Últimas avaliações</h1>
                 </div>
+                <div class="mb-4">
+                    <div class="d-flex">
+                        <input v-model="classificationSearch" class="form-control me-2 rounded" type="search" placeholder="Procure uma palavra chave" aria-label="Busque uma disciplina,professor, local..."/>
+                        <button class="btn btn-success" @click="applySearch">Procurar</button>
+                    </div>
+                    <div class="row justify-content-center mt-2">
+                        <div class="col-sm-3 d-flex align-items-center mt-1">
+                            <label class="me-2">Avaliação:</label>
+                            <select class="form-control form-select-sm rounded" v-model="value">
+                                <option selected :value="null">Selecione</option>
+                                <option :value="1">1 Estrela</option>
+                                <option :value="2">2 Estrelas</option>
+                                <option :value="3">3 Estrelas</option>
+                                <option :value="4">4 Estrelas</option>
+                                <option :value="5">5 Estrelas</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <DataList :method="method" :params="params" v-slot="{ item: item }">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <div class="row mb-lg-2">
-                                <div class="col-sm-11">
+                            <div class="d-flex justify-content-between mb-lg-2">
+                                <div>
                                     <p>{{ item.comment }}</p>
                                 </div>
-                                <div class="col-sm-1 text-end">
+                                <div>
                                     <StarValue :value="item.value"/>
                                 </div>
                             </div>
@@ -136,6 +155,10 @@ export default {
             newClassifiableItem: null,
             showClassificationModal: false,
             classification: {...DEFAULT_CLASSIFICATION},
+
+            value: null,
+            classificationSearch: null,
+            search: null,
             moment
         }
     },
@@ -158,7 +181,9 @@ export default {
         params() {
             return {
                 perPage: 10,
-                classifiable_id: this.classifiableItem.id
+                classifiable_id: this.classifiableItem.id,
+                value: this.value,
+                classification_search: this.search,
             }
         },
 
@@ -189,23 +214,13 @@ export default {
 
             classificationService.save(this.classification).then((response) => {
                 if (response.data && response.data.data && response.data.data.id) {
-                    this.$swal.fire({
-                        title: 'Sucesso!',
-                        text: 'Avaliação salva',
-                        icon: 'success',
-                        confirmButtonText: 'Ok'
-                    });
-
+                    this.$notification.success('Sucesso!', 'Avaliação salva');
                     this.classification = {...DEFAULT_CLASSIFICATION};
                 }
-            }).catch(() => {
-                this.$swal.fire({
-                    title: 'Erro!',
-                    text: 'Não foi possível salvar a avaliação',
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                });
-            }).then(() => this.request--);
+            })
+                .catch(() => {
+                    this.$notification.error('Erro!', 'Não foi possível salvar a avaliação');
+                }).then(() => this.request--);
         },
         saveClassifiable() {
             this.newClassifiableItem.classification_type_id = this.classificationType.id;
@@ -213,23 +228,17 @@ export default {
             classifiableItemService.save(this.newClassifiableItem).then((response) => {
 
                 if (response.data && response.data.data && response.data.data.id) {
-                    this.$swal.fire({
-                        title: 'Sucesso!',
-                        text: this.typeName + ' salvo(a)',
-                        icon: 'success',
-                        confirmButtonText: 'Ok'
-                    });
+                    this.$notification.success('Sucesso!', this.typeName + ' salvo(a)');
 
                     router.get('/classificado/' + response.data.data.id);
                 }
             }).catch(() => {
-                this.$swal.fire({
-                    title: 'Erro!',
-                    text: 'Não foi possível salvar o(a) '.this.typeName,
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                });
+                this.$notification.error('Erro!', 'Não foi possível salvar o(a) '.this.typeName);
             })
+        },
+
+        applySearch() {
+            this.search = this.classificationSearch;
         }
     }
 
