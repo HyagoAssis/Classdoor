@@ -111,5 +111,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Classification::class);
     }
+
+    public function complaints(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Complaint::class);
+    }
     //endregion
 }

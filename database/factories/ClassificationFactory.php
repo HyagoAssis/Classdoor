@@ -20,7 +20,7 @@ class ClassificationFactory extends Factory
         return [
             'user_id'              => User::factory(),
             'classifiable_item_id' => ClassifiableItem::factory(),
-            'value'                => $this->faker->randomNumber(1),
+            'value'                => $this->faker->numberBetween(0, 5),
             'comment'              => $this->faker->text(),
         ];
     }
@@ -29,6 +29,20 @@ class ClassificationFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'classifiable_item_id' => ClassifiableItem::factory()->create(['classification_type_id' => 1]),
+        ]);
+    }
+
+    public function disciplineClassifications(): ClassificationFactory|Factory
+    {
+        return $this->state(fn (array $attributes) => [
+            'classifiable_item_id' => ClassifiableItem::factory()->create(['classification_type_id' => 2]),
+        ]);
+    }
+
+    public function placeClassifications(): ClassificationFactory|Factory
+    {
+        return $this->state(fn (array $attributes) => [
+            'classifiable_item_id' => ClassifiableItem::factory()->create(['classification_type_id' => 3]),
         ]);
     }
 }

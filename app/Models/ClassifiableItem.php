@@ -32,6 +32,8 @@ use Illuminate\Database\Eloquent\{SoftDeletes};
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassifiableItem withoutTrashed()
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Classification> $classifications
+ * @property-read int|null $classifications_count
  * @mixin \Eloquent
  */
 class ClassifiableItem extends BaseModel

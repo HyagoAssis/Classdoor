@@ -83,7 +83,7 @@ describe('validation rules', function () {
 
         postJson(route('classifiable_items.store'), [
             'name'                   => 'Joaquim de Souza',
-            'classification_type_id' => 1,
+            'classification_type_id' => 4131,
         ])->assertJsonValidationErrors([
             'classification_type_id' => Rule::exists('classification_types', 'id'),
         ]);

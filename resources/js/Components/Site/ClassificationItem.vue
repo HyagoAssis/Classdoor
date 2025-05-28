@@ -52,10 +52,10 @@
                     <StarValue :value="item.value"/>
                 </div>
             </div>
-                <div>
-                    <label>Denuncia: </label>
-                    <textarea class="form-control rounded" v-model="complaint"></textarea>
-                </div>
+            <div>
+                <label>Denuncia: </label>
+                <textarea class="form-control rounded" v-model="complaint"></textarea>
+            </div>
             <template v-slot:footer>
                 <button type="button" class="btn btn-danger" @click="showComplaintModal = false">Cancelar</button>
                 <button type="button" class="btn btn-warning" @click="saveComplaint">Denunciar</button>
@@ -69,6 +69,7 @@ import StarValue from "@/Components/Site/ValueStar.vue";
 import moment from "moment";
 import {Link} from "@inertiajs/vue3";
 import Modal from "@/Components/Site/Modal.vue";
+import {complaintService} from "@/resource.js";
 
 export default {
     name: 'ClassificationItem',
@@ -84,6 +85,7 @@ export default {
 
     data() {
         return {
+            requests: 0,
             showComplaintModal: false,
             complaint: null,
             classificationToComplaint: null,
@@ -103,9 +105,21 @@ export default {
 
     methods: {
         saveComplaint() {
-            console.log('Chegou aki');
+            this.requests++;
 
-            this.showComplaintModal = false;
+            complaintService.save({
+                complaint: this.complaint,
+                classification_id: this.item.id
+            }).then(() => {
+                this.$notification.success(
+                    'Sucesso',
+                    'Denúncia salva'
+                );
+            }).catch(() => this.$notification.error('Error', 'Não foi possível salvar a denúncia'))
+                .then(() => {
+                    this.requests--;
+                    this.showComplaintModal = false;
+                });
         }
     }
 }

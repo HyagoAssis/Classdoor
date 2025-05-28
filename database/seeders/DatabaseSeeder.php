@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
         //        ]);
 
         Classification::factory(900)->teacherClassifications()->create();
+        Classification::factory(900)->disciplineClassifications()->create();
+        Classification::factory(900)->placeClassifications()->create();
 
     }
 }
