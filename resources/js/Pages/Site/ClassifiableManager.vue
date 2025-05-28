@@ -65,45 +65,9 @@
                 <div class="flex-grid row">
                     <h1 class="fs-5 fw-bold mb-4 col-sm-8">Últimas avaliações</h1>
                 </div>
-                <div class="mb-4">
-                    <div class="d-flex">
-                        <input v-model="classificationSearch" class="form-control me-2 rounded" type="search" placeholder="Procure uma palavra chave" aria-label="Busque uma disciplina,professor, local..."/>
-                        <button class="btn btn-success" @click="applySearch">Procurar</button>
-                    </div>
-                    <div class="row justify-content-center mt-2">
-                        <div class="col-sm-3 d-flex align-items-center mt-1">
-                            <label class="me-2">Avaliação:</label>
-                            <select class="form-control form-select-sm rounded" v-model="value">
-                                <option selected :value="null">Selecione</option>
-                                <option :value="1">1 Estrela</option>
-                                <option :value="2">2 Estrelas</option>
-                                <option :value="3">3 Estrelas</option>
-                                <option :value="4">4 Estrelas</option>
-                                <option :value="5">5 Estrelas</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+               <FiltersHeader :params=filters :show-type-filter="false" @applySearch="applySearch" placeholder="Busque uma avaliação" :show-status-filter="false"/>
                 <DataList :method="method" :params="params" v-slot="{ item: item }">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-lg-2">
-                                <div>
-                                    <p>{{ item.comment }}</p>
-                                </div>
-                                <div>
-                                    <StarValue :value="item.value"/>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <small
-                                    class="text-secondary">{{
-                                        moment(item.created_at).format('DD/MM/YYYY H:mm')
-                                    }}</small>
-                                <a class="fw-bold text-danger small" href="#">Denunciar</a>
-                            </div>
-                        </div>
-                    </div>
+                    <ClassificationItem :item="item" />
                 </DataList>
             </template>
         </template>
@@ -119,6 +83,8 @@ import {router} from "@inertiajs/vue3";
 import moment from "moment";
 import Spinner from "@/Components/Site/Spinner.vue";
 import StarValue from "@/Components/Site/ValueStar.vue";
+import ClassificationItem from "@/Components/Site/ClassificationItem.vue";
+import FiltersHeader from "@/Components/Site/FiltersHeader.vue";
 
 const DEFAULT_CLASSIFIABLE = {
     name: null,
@@ -133,7 +99,7 @@ const DEFAULT_CLASSIFICATION = {
 
 export default {
     name: 'ClassifiableManager',
-    components: {StarValue, Spinner, Link, DataList, Head, SiteLayout},
+    components: {FiltersHeader, ClassificationItem, StarValue, Spinner, Link, DataList, Head, SiteLayout},
 
     props: {
         classifiableItem: {
@@ -158,7 +124,10 @@ export default {
 
             value: null,
             classificationSearch: null,
-            search: null,
+            filters: {
+              value: null,
+              search: null
+            },
             moment
         }
     },
@@ -182,8 +151,8 @@ export default {
             return {
                 perPage: 10,
                 classifiable_id: this.classifiableItem.id,
-                value: this.value,
-                classification_search: this.search,
+                value: this.filters.value,
+                classification_search: this.filters.search,
             }
         },
 
@@ -237,8 +206,8 @@ export default {
             })
         },
 
-        applySearch() {
-            this.search = this.classificationSearch;
+        applySearch(value) {
+            this.filters.search = value;
         }
     }
 
