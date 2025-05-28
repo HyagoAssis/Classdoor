@@ -1,43 +1,86 @@
 <template>
-        <div class="modal-dialog">
+    <div
+        class="modal fade"
+        ref="staticModal"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h1 class="modal-title fs-5 fw-bold" id="staticBackdropLabel">
+                        <slot name="header" />
+                    </h1>
+                    <button type="button" class="btn-close" @click="closeModal"></button>
                 </div>
                 <div class="modal-body">
-                    <slot/>
+                    <slot />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <slot name="footer" />
                 </div>
             </div>
         </div>
+    </div>
 </template>
 
 <script>
+import {ref, watch, onMounted, computed} from 'vue'
+import { Modal } from 'bootstrap'
+
 export default {
     name: 'Modal',
+    props: {
+        modelValue: Boolean,
+    },
+    emits: ['update:modelValue'],
+    setup(props, { emit }) {
+        const staticModal = ref(null)
+        let modalInstance = null
 
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue',
+        const openModal = () => {
+            if (!modalInstance) {
+                modalInstance = new Modal(staticModal.value, {
+                    backdrop: true,
+                    keyboard: true,
+                })
+                staticModal.value.addEventListener('hidden.bs.modal', () => {
+                    emit('update:modelValue', false)
+                })
+            }
+            modalInstance.show()
+        }
+
+        const closeModal = () => {
+            if (modalInstance) {
+                modalInstance.hide()
+            }
+        }
+
+        watch(
+            () => props.modelValue,
+            (visible) => {
+                if (visible) {
+                    openModal()
+                } else {
+                    closeModal()
+                }
+            }
+        )
+
+        onMounted(() => {
+            if (props.modelValue) {
+                openModal()
+            }
+        })
+
+        return {
+            staticModal,
+            openModal,
+            closeModal,
+        }
     },
 
-    props: {
-        modelValue: {
-            type: [Boolean, Object],
-            default: false,
-        },
-    }
 }
 </script>
-
-<style>
-.cd-modal{
-    position: fixed;
-    z-index: 100;
-}
-</style>
-

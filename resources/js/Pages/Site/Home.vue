@@ -1,7 +1,7 @@
 <template>
     <Head title="Página Inicial" />
     <SiteLayout>
-        <h1 class="fs-4 fw-bold mb-4">Últimas avaliações</h1>
+        <h1 class="fs-4 fw-bold mb-4">Avaliações</h1>
         <FiltersHeader :params="params" @applySearch="searchName" :show-type-filter="true"/>
         <DataList :method="method" :params="params" v-slot="{ item: item }">
             <ClassificationItem :item="item" :with-type-name="true"/>

@@ -1,7 +1,7 @@
 <template>
     <div class="mb-4">
         <div class="d-flex">
-            <input v-model="search" class="form-control me-2 rounded" type="search" placeholder="Busque uma disciplina,professor, local..."/>
+            <input v-model="search" class="form-control me-2 rounded" type="search" :placeholder="placeholder" @keyup.enter="applySearch"/>
             <button class="btn btn-success" @click="applySearch">Procurar</button>
         </div>
         <div class="justify-content-start d-flex mt-3 flex-wrap gap-3">
@@ -54,9 +54,15 @@ export default {
     props: {
         withTypeName: false,
         params: Object,
-        showStatusFilter: false,
-        showTypeFilter: true,
-        placeholder: "Busque uma disciplina,professor, local...",
+        showStatusFilter: {
+            default: false
+        },
+        showTypeFilter: {
+            default: true
+        },
+        placeholder: {
+            default: "Busque uma disciplina,professor, local..."
+        },
     },
 
     data() {

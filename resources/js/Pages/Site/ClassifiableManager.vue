@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="flex-grid row">
-                    <h1 class="fs-5 fw-bold mb-4 col-sm-8">Últimas avaliações</h1>
+                    <h1 class="fs-5 fw-bold mb-4 col-sm-8">Avaliações</h1>
                 </div>
                <FiltersHeader :params=filters :show-type-filter="false" @applySearch="applySearch" placeholder="Busque uma avaliação" :show-status-filter="false"/>
                 <DataList :method="method" :params="params" v-slot="{ item: item }">
