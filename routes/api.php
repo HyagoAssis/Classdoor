@@ -21,15 +21,22 @@ Route::group(['domain' => config('app.url')], function () {
             //region ClassifiableItem
             Route::delete('classifiable_items/{classifiableItem}', ClassifiableItem\DeleteController::class)->name('classifiable_items.delete');
             //endregion
+
+            //region Complaints
+            Route::get('complaints', Complaint\IndexController::class)->name('complaint.index');
+            Route::post('complaints/change_status/{complaint}', Complaint\ChangeStatusController::class)->name('complaint.change_status');
+            //endregion
+
         });
 
         Route::post('classifiable_items', ClassifiableItem\StoreController::class)->name('classifiable_items.store');
 
         Route::post('classifications', Classification\StoreController::class)->name('classifications.store');
 
+        //region Complaints
         Route::get('complaints', Complaint\IndexController::class)->name('complaint.index');
         Route::post('complaints', Complaint\StoreController::class)->name('complaint.store');
-        Route::post('complaints/change_status/{complaint}', Complaint\ChangeStatusController::class)->name('complaint.change_status');
+        //endregion
     });
 
     Route::get('classifiable_items', ClassifiableItem\IndexController::class)->name('classifiable_items.index');

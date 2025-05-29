@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ComplaintResource;
 use App\Models\{ClassifiableItem, Classification, Complaint};
 use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
 
 class IndexController extends Controller
 {
@@ -22,10 +23,10 @@ class IndexController extends Controller
         $search     = $request->input('search');
         $status     = $request->input('status');
 
-        $user = null;
+        $user = auth()->user();
 
-        if ($filterUser) {
-            $user = auth()->user();
+        if (!$filterUser && !$user->isAdmin()) {
+            throw new UnauthorizedException();
         }
 
         $data = Complaint::with(['classification.classifiableItem.classificationType'])

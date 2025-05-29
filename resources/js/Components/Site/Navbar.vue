@@ -17,7 +17,7 @@
                     <template v-if="$page.props.auth.user">
                         <Link class="btn btn-light fw-bold me-2" :href="route('profile')">Meu Perfil</Link>
                         <button class="btn btn-outline-light fw-bold me-2" @click="logout">Sair</button>
-                        <Link class="btn btn-danger fw-bold end-0" :href="route('complaints')">Denúncias</Link>
+                        <Link v-if="$page.props.auth.user.role === 1" class="btn btn-danger fw-bold end-0" :href="route('complaints')">Denúncias</Link>
                     </template>
                     <template v-else>
                         <Link class="btn btn-light fw-bold me-2" :href="route('login')">Entrar</Link>
