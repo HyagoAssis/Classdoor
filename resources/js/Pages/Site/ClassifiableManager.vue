@@ -6,9 +6,17 @@
             <h1 class="fs-1 fw-bold mb-4">{{ title }}</h1>
             <template v-if="    !classifiableItem && newClassifiableItem">
                 <div class="mb-2">
-                    <label for="inputName">Nome:</label>
-                    <input type="text" v-model="newClassifiableItem.name" class="form-control rounded" id="inputName"
-                           placeholder="Preencha um nome...">
+                    <InputLabel
+                        for="classifiable_name"
+                        value="Nome"
+                    />
+
+                    <TextInput
+                        id="classifiable_name"
+                        v-model="newClassifiableItem.name"
+                        type="text"
+                        class="tw-mt-1 tw-block tw-w-full"
+                    />
                 </div>
                 <div class="text-end">
                     <button class="btn btn-dark fw-bold me-2" :class="{disabled: !newClassifiableItem.name}"
@@ -85,6 +93,8 @@ import Spinner from "@/Components/Site/Spinner.vue";
 import StarValue from "@/Components/Site/ValueStar.vue";
 import ClassificationItem from "@/Components/Site/ClassificationItem.vue";
 import FiltersHeader from "@/Components/Site/FiltersHeader.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import TextInput from "@/Components/TextInput.vue";
 
 const DEFAULT_CLASSIFIABLE = {
     name: null,
@@ -99,7 +109,10 @@ const DEFAULT_CLASSIFICATION = {
 
 export default {
     name: 'ClassifiableManager',
-    components: {FiltersHeader, ClassificationItem, StarValue, Spinner, Link, DataList, Head, SiteLayout},
+    components: {
+        TextInput,
+        InputLabel,
+        FiltersHeader, ClassificationItem, StarValue, Spinner, Link, DataList, Head, SiteLayout},
 
     props: {
         classifiableItem: {

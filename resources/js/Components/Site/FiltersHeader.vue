@@ -1,7 +1,13 @@
 <template>
     <div class="mb-4">
         <div class="d-flex">
-            <input v-model="search" class="form-control me-2 rounded" type="search" :placeholder="placeholder" @keyup.enter="applySearch"/>
+            <TextInput
+                v-model="search"
+                type="text"
+                :placeholder="placeholder"
+                class="tw-mt-1 tw-block tw-w-full me-2"
+                @keyup.enter="applySearch"
+            />
             <button class="btn btn-success" @click="applySearch">Procurar</button>
         </div>
         <div class="justify-content-start d-flex mt-3 flex-wrap gap-3">
@@ -43,8 +49,11 @@
 
 <script>
 
+import TextInput from "@/Components/TextInput.vue";
+
 export default {
     name: 'FiltersHeader',
+    components: {TextInput},
 
     model: {
         prop: 'params',

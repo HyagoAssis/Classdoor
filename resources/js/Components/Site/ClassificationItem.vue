@@ -1,5 +1,5 @@
 <template>
-    <div class="card mb-3">
+    <div class="tw-bg-white tw-p-4 tw-shadow sm:tw-rounded-lg sm:tw-p-8 mb-3">
         <div class="card-body">
             <div class="row mb-lg-4">
                 <div class="col-8 d-inline-block">
