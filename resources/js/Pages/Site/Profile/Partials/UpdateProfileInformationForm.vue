@@ -47,7 +47,6 @@ const form = useForm({
                     class="tw-mt-1 tw-block tw-w-full"
                     v-model="form.name"
                     required
-                    autofocus
                     autocomplete="name"
                 />
 
