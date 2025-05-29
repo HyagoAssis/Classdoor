@@ -20,11 +20,11 @@ class ChangeStatusController extends Controller
 
         $classification = $complaint->classification;
 
-        if ($complaint->status === Complaint::STATUS_REPROVED) {
+        if ($complaint->status === Complaint::STATUS_APPROVED) {
             $classification->update(['valid' => false]);
         } else {
             $hasInvalidComplaint = $classification->complaints->contains(
-                fn (Complaint $complaint) => $complaint->status === Complaint::STATUS_REPROVED
+                fn (Complaint $complaint) => $complaint->status === Complaint::STATUS_APPROVED
             );
 
             if (!$hasInvalidComplaint) {
