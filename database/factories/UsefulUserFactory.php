@@ -6,9 +6,9 @@ use App\Models\{Classification, User};
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Complaint>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UsefulUser>
  */
-class ComplaintFactory extends Factory
+class UsefulUserFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +18,8 @@ class ComplaintFactory extends Factory
     public function definition(): array
     {
         return [
-            'status'            => 1,
-            'classification_id' => Classification::factory(),
-            'complaint'         => $this->faker->sentence(),
             'user_id'           => User::factory(),
+            'classification_id' => Classification::factory(),
         ];
     }
 }

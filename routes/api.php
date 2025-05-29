@@ -32,6 +32,7 @@ Route::group(['domain' => config('app.url')], function () {
         Route::post('classifiable_items', ClassifiableItem\StoreController::class)->name('classifiable_items.store');
 
         Route::post('classifications', Classification\StoreController::class)->name('classifications.store');
+        Route::post('classifications/useful/{classification}', Classification\ChangeUsefulController::class)->name('classifications.useful');
 
         //region Complaints
         Route::get('complaints', Complaint\IndexController::class)->name('complaint.index');

@@ -43,6 +43,8 @@ use Laravel\Sanctum\{HasApiTokens, PersonalAccessToken};
  * @property-read int|null $classifiable_items_count
  * @property-read Collection<int, \App\Models\Classification> $classifications
  * @property-read int|null $classifications_count
+ * @property-read Collection<int, \App\Models\Complaint> $complaints
+ * @property-read int|null $complaints_count
  * @mixin \Eloquent
  */
 class User extends Authenticatable

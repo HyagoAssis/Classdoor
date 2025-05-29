@@ -19,16 +19,16 @@
                 </div>
             </div>
             <div class="d-flex justify-content-between">
-                <Link class="link-success d-flex flex-column text-secondary" href="#">
+                <button ref='usefulButton' class="link-success d-flex flex-column text-secondary" :class="{'tw-pointer-events-none': !$page.props.auth.user, 'text-success': item.liked}" @click="changeUseful(item)">
                     <div class="d-flex">
                         <div class="me-4">
-                            <small class="fw-bold me-2">20</small>
+                            <small class="fw-bold me-2">{{ item.useful_count }}</small>
                             <i class="bi-hand-thumbs-up-fill me-2"/>
                             <small class="fw-bold">Útil</small>
                         </div>
                     </div>
                     <small class="text-secondary">{{ moment(item.created_at).format('DD/MM/YYYY H:mm') }}</small>
-                </Link>
+                </button>
                 <div class="align-content-end">
                     <button class="fw-bold small link-danger" href="#" @click="showComplaintModal = true">Denunciar
                     </button>
@@ -70,7 +70,7 @@ import StarValue from "@/Components/Site/ValueStar.vue";
 import moment from "moment";
 import {Link} from "@inertiajs/vue3";
 import Modal from "@/Components/Site/Modal.vue";
-import {complaintService} from "@/resource.js";
+import {classificationService, complaintService} from "@/resource.js";
 
 export default {
     name: 'ClassificationItem',
@@ -108,8 +108,6 @@ export default {
         saveComplaint() {
             this.requests++;
 
-            console.log(this.item.id);
-
             complaintService.save({
                 complaint: this.complaint,
                 classification_id: this.item.id
@@ -123,6 +121,23 @@ export default {
                     this.requests--;
                     this.showComplaintModal = false;
                 });
+        },
+
+        changeUseful(item) {
+            if (!this.$page.props.auth.user){
+                return;
+            }
+
+            classificationService.useful(item.id).then((response) => {
+                item.useful_count = response.data.count;
+                item.liked = response.data.liked;
+            }).catch(() => {
+                this.$notification.error('Erro')
+            }).then(() => {
+                if(this.$refs.usefulButton) {
+                    this.$refs.usefulButton.blur();
+                }
+            });
         }
     }
 }

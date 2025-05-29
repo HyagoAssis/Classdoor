@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Classification;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClassificationResource;
-use App\Models\{ClassifiableItem, Classification};
+use App\Models\{ClassifiableItem, Classification, UsefulUser};
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -19,13 +19,10 @@ class IndexController extends Controller
         $classifiableId       = $request->input('classifiable_id');
         $name                 = $request->input('search');
         $filterUser           = $request->input('filterUser', false);
-        $user                 = null;
         $value                = $request->input('value', null);
         $classificationSearch = $request->input('classification_search', false);
 
-        if ($filterUser) {
-            $user = auth()->user();
-        }
+        $user = auth()->user();
 
         $data = Classification::with(['classifiableItem.classificationType', 'complaints'])
             ->join(ClassifiableItem::table(), ClassifiableItem::column('id'), Classification::column('classifiable_item_id'))
@@ -51,8 +48,15 @@ class IndexController extends Controller
             ->when($classificationSearch, function ($query) use ($classificationSearch) {
                 $query->where(Classification::column('comment'), 'LIKE', '%' . $classificationSearch . '%');
             })
+            ->when($user, function ($query) use ($user) {
+                $query->leftJoin(UsefulUser::table(), function ($join) use ($user) {
+                    $join->on(Classification::column('id'), UsefulUser::column('classification_id'))->where(UsefulUser::column('user_id'), $user->id);
+                })
+                    ->addSelect(\DB::raw(UsefulUser::column('id as liked')));
+            })
+            ->orderBy(Classification::column('useful_count'), 'desc')
             ->orderBy(Classification::column('created_at'), 'desc')
-            ->select([Classification::column('*')])
+            ->addSelect([Classification::column('*')])
             ->paginate($perPage);
 
         return ClassificationResource::collection($data);
