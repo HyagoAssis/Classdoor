@@ -8,7 +8,7 @@
                 class="tw-mt-1 tw-block tw-w-full me-2"
                 @keyup.enter="applySearch"
             />
-            <button class="btn btn-success" @click="applySearch">Procurar</button>
+            <button class="btn btn-success mt-1" @click="applySearch">Procurar</button>
         </div>
         <div class="justify-content-start d-flex mt-3 flex-wrap gap-3">
             <div class="d-flex align-items-center me-3" v-if="showTypeFilter" style="width: 13rem">
@@ -80,6 +80,13 @@ export default {
         }
     },
 
+    watch: {
+        search(newValue, oldValue) {
+            if(oldValue && (newValue === null || newValue === '')) {
+                this.applySearch();
+            }
+        }
+    },
     methods: {
         applySearch() {
             this.$emit('applySearch', this.search);
