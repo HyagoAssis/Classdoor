@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\{Relations\BelongsTo, SoftDeletes};
+use Illuminate\Database\Eloquent\{Relations\BelongsTo, Relations\HasMany, SoftDeletes};
 
 /**
- *
- *
  * @property int $id
  * @property int $value
  * @property string|null $comment
@@ -16,6 +14,7 @@ use Illuminate\Database\Eloquent\{Relations\BelongsTo, SoftDeletes};
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ *
  * @method static \Database\Factories\ClassificationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Classification newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Classification newQuery()
@@ -31,7 +30,9 @@ use Illuminate\Database\Eloquent\{Relations\BelongsTo, SoftDeletes};
  * @method static \Illuminate\Database\Eloquent\Builder|Classification whereValue($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Classification withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Classification withoutTrashed()
+ *
  * @property-read \App\Models\ClassifiableItem $classifiableItem
+ *
  * @mixin \Eloquent
  */
 class Classification extends BaseModel
@@ -39,12 +40,17 @@ class Classification extends BaseModel
     use HasFactory;
     use softDeletes;
 
-    protected $fillable = ['value', 'comment', 'classifiable_item_id'];
+    protected $fillable = ['value', 'comment', 'classifiable_item_id', 'valid'];
 
     //region relations
     public function classifiableItem(): BelongsTo
     {
         return $this->belongsTo(ClassifiableItem::class);
+    }
+
+    public function complaints(): HasMany
+    {
+        return $this->hasMany(Complaint::class);
     }
 
     //endregion

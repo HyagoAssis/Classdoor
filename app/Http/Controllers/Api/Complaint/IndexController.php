@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\Classification;
+namespace App\Http\Controllers\Api\Complaint;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ClassificationResource;
-use App\Models\{ClassifiableItem, Classification};
+use App\Http\Resources\ComplaintResource;
+use App\Models\{ClassifiableItem, Classification, Complaint};
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -12,7 +12,7 @@ class IndexController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function __invoke(Request $request)
     {
         $perPage              = $request->query('perPage', 10);
         $type                 = $request->input('type');
@@ -23,15 +23,13 @@ class IndexController extends Controller
         $value                = $request->input('value', null);
         $classificationSearch = $request->input('classification_search', false);
 
-        if ($filterUser) {
-            $user = auth()->user();
-        }
+        //        if ($filterUser) {
+        //            $user = auth()->user();
+        //        }
 
-        $data = Classification::with(['classifiableItem.classificationType', 'complaints'])
+        $data = Complaint::with(['classification.classifiableItem.classificationType'])
+            ->join(Classification::table(), Complaint::column('classification_id'), Classification::column('id'))
             ->join(ClassifiableItem::table(), ClassifiableItem::column('id'), Classification::column('classifiable_item_id'))
-            ->when(!$filterUser, function ($query) {
-                $query->where(Classification::column('valid'), true);
-            })
             ->when($type, function ($query, $type) {
                 $query
                     ->where(ClassifiableItem::column('classification_type_id'), $type);
@@ -42,9 +40,9 @@ class IndexController extends Controller
             ->when($name, function ($query, $name) {
                 $query->where(ClassifiableItem::column('name'), 'like', '%' . $name . '%');
             })
-            ->when($filterUser, function ($query) use ($user) {
-                $query->where(Classification::column('user_id'), $user->id);
-            })
+//            ->when($filterUser, function ($query) use ($user) {
+//                $query->where(Classification::column('user_id'), $user->id);
+//            })
             ->when($value, function ($query) use ($value) {
                 $query->where(Classification::column('value'), $value);
             })
@@ -52,8 +50,9 @@ class IndexController extends Controller
                 $query->where(Classification::column('comment'), 'LIKE', '%' . $classificationSearch . '%');
             })
             ->orderBy(Classification::column('created_at'), 'desc')
+            ->select([Complaint::column('*')])
             ->paginate($perPage);
 
-        return ClassificationResource::collection($data);
+        return ComplaintResource::collection($data);
     }
 }

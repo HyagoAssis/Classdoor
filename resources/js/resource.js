@@ -16,4 +16,6 @@ function resource(path, actions = {}) {
 }
 export const classifiableItemService = resource('/api/classifiable_items');
 export const classificationService = resource('/api/classifications');
-export const complaintService = resource('/api/complaints');
+export const complaintService = resource('/api/complaints', {
+    changeStatus: (id, obj, params = {}) => axios.post(`/api/complaints/change_status/${id}`, obj, { params })
+});

@@ -9,7 +9,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 fw-bold" id="staticBackdropLabel">
+                    <h1 class="modal-title fs-5 fw-bold" id="staticBackdropLabel" v-if="$slots.header">
                         <slot name="header" />
                     </h1>
                     <button type="button" class="btn-close" @click="closeModal"></button>
@@ -17,7 +17,7 @@
                 <div class="modal-body">
                     <slot />
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" v-if="$slots.footer">
                     <slot name="footer" />
                 </div>
             </div>
