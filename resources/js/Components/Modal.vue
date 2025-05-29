@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const props = defineProps({
     show: {
@@ -17,16 +17,26 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['close']);
+const dialog = ref();
+const showSlot = ref(props.show);
 
 watch(
     () => props.show,
     () => {
         if (props.show) {
             document.body.style.overflow = 'hidden';
+            showSlot.value = true;
+
+            dialog.value?.showModal();
         } else {
-            document.body.style.overflow = null;
+            document.body.style.overflow = '';
+
+            setTimeout(() => {
+                dialog.value?.close();
+                showSlot.value = false;
+            }, 200);
         }
-    }
+    },
 );
 
 const close = () => {
@@ -36,8 +46,12 @@ const close = () => {
 };
 
 const closeOnEscape = (e) => {
-    if (e.key === 'Escape' && props.show) {
-        close();
+    if (e.key === 'Escape') {
+        e.preventDefault();
+
+        if (props.show) {
+            close();
+        }
     }
 };
 
@@ -45,54 +59,65 @@ onMounted(() => document.addEventListener('keydown', closeOnEscape));
 
 onUnmounted(() => {
     document.removeEventListener('keydown', closeOnEscape);
-    document.body.style.overflow = null;
+
+    document.body.style.overflow = '';
 });
 
 const maxWidthClass = computed(() => {
     return {
-        sm: 'sm:max-w-sm',
-        md: 'sm:max-w-md',
-        lg: 'sm:max-w-lg',
-        xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
+        sm: 'sm:tw-max-w-sm',
+        md: 'sm:tw-max-w-md',
+        lg: 'sm:tw-max-w-lg',
+        xl: 'sm:tw-max-w-xl',
+        '2xl': 'sm:tw-max-w-2xl',
     }[props.maxWidth];
 });
 </script>
 
 <template>
-    <Teleport to="body">
-        <Transition leave-active-class="duration-200">
-            <div v-show="show" class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50" scroll-region>
-                <Transition
-                    enter-active-class="ease-out duration-300"
-                    enter-from-class="opacity-0"
-                    enter-to-class="opacity-100"
-                    leave-active-class="ease-in duration-200"
-                    leave-from-class="opacity-100"
-                    leave-to-class="opacity-0"
-                >
-                    <div v-show="show" class="fixed inset-0 transform transition-all" @click="close">
-                        <div class="absolute inset-0 bg-gray-500 opacity-75" />
-                    </div>
-                </Transition>
-
-                <Transition
-                    enter-active-class="ease-out duration-300"
-                    enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    enter-to-class="opacity-100 translate-y-0 sm:scale-100"
-                    leave-active-class="ease-in duration-200"
-                    leave-from-class="opacity-100 translate-y-0 sm:scale-100"
-                    leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+    <dialog
+        class="tw-z-50 tw-m-0 tw-min-h-full tw-min-w-full tw-overflow-y-auto tw-bg-transparent backdrop:tw-bg-transparent"
+        ref="dialog"
+    >
+        <div
+            class="tw-fixed tw-inset-0 tw-z-50 tw-overflow-y-auto tw-px-4 tw-py-6 sm:tw-px-0"
+            scroll-region
+        >
+            <Transition
+                enter-active-class="tw-ease-out tw-duration-300"
+                enter-from-class="tw-opacity-0"
+                enter-to-class="tw-opacity-100"
+                leave-active-class="tw-ease-in tw-duration-200"
+                leave-from-class="tw-opacity-100"
+                leave-to-class="tw-opacity-0"
+            >
+                <div
+                    v-show="show"
+                    class="tw-fixed tw-inset-0 tw-transform tw-transition-all"
+                    @click="close"
                 >
                     <div
-                        v-show="show"
-                        class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
-                        :class="maxWidthClass"
-                    >
-                        <slot v-if="show" />
-                    </div>
-                </Transition>
-            </div>
-        </Transition>
-    </Teleport>
+                        class="tw-absolute tw-inset-0 tw-bg-gray-500 tw-opacity-75"
+                    />
+                </div>
+            </Transition>
+
+            <Transition
+                enter-active-class="tw-ease-out tw-duration-300"
+                enter-from-class="tw-opacity-0 tw-translate-y-4 sm:tw-translate-y-0 sm:tw-scale-95"
+                enter-to-class="tw-opacity-100 tw-translate-y-0 sm:tw-scale-100"
+                leave-active-class="tw-ease-in tw-duration-200"
+                leave-from-class="tw-opacity-100 tw-translate-y-0 sm:tw-scale-100"
+                leave-to-class="tw-opacity-0 tw-translate-y-4 sm:tw-translate-y-0 sm:tw-scale-95"
+            >
+                <div
+                    v-show="show"
+                    class="tw-mb-6 tw-transform tw-overflow-hidden tw-rounded-lg tw-bg-white tw-shadow-xl tw-transition-all sm:tw-mx-auto sm:tw-w-full"
+                    :class="maxWidthClass"
+                >
+                    <slot v-if="showSlot" />
+                </div>
+            </Transition>
+        </div>
+    </dialog>
 </template>

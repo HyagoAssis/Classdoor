@@ -52,6 +52,7 @@ class IndexController extends Controller
                 $query->where(Classification::column('comment'), 'LIKE', '%' . $classificationSearch . '%');
             })
             ->orderBy(Classification::column('created_at'), 'desc')
+            ->select([Classification::column('*')])
             ->paginate($perPage);
 
         return ClassificationResource::collection($data);

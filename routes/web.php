@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Site\ClassifiableManagerController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,6 +41,11 @@ Route::group(['domain' => config('app.url')], function () {
     Route::get('/classificado/novo', ClassifiableManagerController::class)->name('classifiable_manager.new')->middleware(['auth:sanctum', 'verified']);
 
     Route::get('/classificado/{classifiableItem}', ClassifiableManagerController::class)->name('classifiable_manager.show');
+
+    Route::middleware('auth')->group(function () {
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
 
     require __DIR__ . '/auth.php';
 });

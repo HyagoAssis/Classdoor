@@ -14,6 +14,7 @@
                     <p class="text-secondary-emphasis">{{ item.comment }}</p>
                 </div>
                 <div class="col-4 text-end">
+                    <span v-if="!item.valid" class="text-danger bg-danger-subtle rounded p-2 fw-bold me-2">Removida</span>
                     <StarValue :value="item.value"/>
                 </div>
             </div>
@@ -106,6 +107,8 @@ export default {
     methods: {
         saveComplaint() {
             this.requests++;
+
+            console.log(this.item.id);
 
             complaintService.save({
                 complaint: this.complaint,
