@@ -42,36 +42,32 @@ const closeModal = () => {
     <section class="tw-space-y-6">
         <header>
             <h2 class="tw-text-lg tw-font-medium tw-text-gray-900">
-                Delete Account
+                Deletar conta
             </h2>
 
             <p class="tw-mt-1 tw-text-sm tw-text-gray-600">
-                Once your account is deleted, all of its resources and data will
-                be permanently deleted. Before deleting your account, please
-                download any data or information that you wish to retain.
+                Uma vez que sua conta for excluída, todos os seus recursos e dados serão permanentemente apagados. Antes de excluir sua conta, faça o download de qualquer dado ou informação que deseja manter.
             </p>
         </header>
 
-        <DangerButton @click="confirmUserDeletion">Delete Account</DangerButton>
+        <DangerButton @click="confirmUserDeletion">Deletar conta</DangerButton>
 
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="tw-p-6">
                 <h2
                     class="tw-text-lg tw-font-medium tw-text-gray-900"
                 >
-                    Are you sure you want to delete your account?
+                    Tem certeza de que deseja excluir sua conta?
                 </h2>
 
                 <p class="tw-mt-1 tw-text-sm tw-text-gray-600">
-                    Once your account is deleted, all of its resources and data
-                    will be permanently deleted. Please enter your password to
-                    confirm you would like to permanently delete your account.
+                    Uma vez que sua conta for excluída, todos os seus recursos e dados serão permanentemente apagados. Por favor, insira sua senha para confirmar que deseja excluir sua conta de forma permanente.
                 </p>
 
                 <div class="tw-mt-6">
                     <InputLabel
                         for="password"
-                        value="Password"
+                        value="Senha"
                         class="tw-sr-only"
                     />
 
@@ -81,7 +77,7 @@ const closeModal = () => {
                         v-model="form.password"
                         type="password"
                         class="tw-mt-1 tw-block tw-w-3/4"
-                        placeholder="Password"
+                        placeholder="Senha"
                         @keyup.enter="deleteUser"
                     />
 
@@ -90,7 +86,7 @@ const closeModal = () => {
 
                 <div class="tw-mt-6 tw-flex tw-justify-end">
                     <SecondaryButton @click="closeModal">
-                        Cancel
+                        Cancelar
                     </SecondaryButton>
 
                     <DangerButton
@@ -99,7 +95,7 @@ const closeModal = () => {
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
-                        Delete Account
+                        Deletar Conta
                     </DangerButton>
                 </div>
             </div>
