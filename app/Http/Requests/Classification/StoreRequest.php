@@ -30,6 +30,7 @@ class StoreRequest extends FormRequest
             'value'                => ['integer', 'required'],
             'comment'              => ['string', 'nullable'],
             'classifiable_item_id' => ['integer', 'required'],
+            'file'                 => ['file', 'nullable'],
         ];
     }
 }

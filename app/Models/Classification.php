@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\{Relations\BelongsTo, Relations\HasMany, SoftDe
  * @property int $valid
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Complaint> $complaints
  * @property-read int|null $complaints_count
+ * @property mixed|string $file
  * @method static \Illuminate\Database\Eloquent\Builder|Classification whereUsefulCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Classification whereValid($value)
  * @mixin \Eloquent
@@ -45,7 +46,7 @@ class Classification extends BaseModel
     use HasFactory;
     use softDeletes;
 
-    protected $fillable = ['value', 'comment', 'classifiable_item_id', 'valid', 'useful_count'];
+    protected $fillable = ['value', 'comment', 'classifiable_item_id', 'valid', 'useful_count', 'file'];
 
     //region relations
     public function classifiableItem(): BelongsTo

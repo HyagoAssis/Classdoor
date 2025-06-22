@@ -42,4 +42,5 @@ Route::group(['domain' => config('app.url')], function () {
 
     Route::get('classifiable_items', ClassifiableItem\IndexController::class)->name('classifiable_items.index');
     Route::get('classifications', Classification\IndexController::class)->name('classifications.index');
+    Route::get('classifications/download_file/{classification}', Classification\DownloadFileController::class)->name('classifications.download_file');
 });

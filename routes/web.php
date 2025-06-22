@@ -22,8 +22,6 @@ Route::group(['domain' => config('app.url')], function () {
         return Inertia::render('Site/PlacesList');
     })->name('places');
 
-    Route::get('/classificado/{classifiableItem}', ClassifiableManagerController::class)->name('classifiable_manager.show');
-
     Route::middleware('auth')->group(function () {
         Route::get('/perfil', function () {
             return Inertia::render('Site/Profile');
@@ -38,6 +36,8 @@ Route::group(['domain' => config('app.url')], function () {
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
+
+    Route::get('/classificado/{classifiableItem}', ClassifiableManagerController::class)->name('classifiable_manager.show');
 
     require __DIR__ . '/auth.php';
 });

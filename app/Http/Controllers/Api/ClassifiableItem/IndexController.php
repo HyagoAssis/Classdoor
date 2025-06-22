@@ -19,7 +19,7 @@ class IndexController extends Controller
         $value = $request->input('value');
 
         $data = ClassifiableItem::with(['classifications'])
-            ->join(Classification::table(), Classification::column('classifiable_item_id'), ClassifiableItem::column('id'))
+            ->leftJoin(Classification::table(), Classification::column('classifiable_item_id'), ClassifiableItem::column('id'))
             ->when($type, function ($query, $type) {
                 $query->where(ClassifiableItem::column('classification_type_id'), $type);
             })

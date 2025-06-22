@@ -61,6 +61,10 @@
                                     <textarea class="form-control rounded" v-model="classification.comment"></textarea>
                                 </div>
                             </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Insira um arquivo</label>
+                                <input class="tw-block tw-w-full tw-text-sm tw-text-gray-900 tw-border tw-border-gray-300 tw-rounded-sm tw-cursor-pointer tw-dark:text-gray-400 tw-focus:outline-none tw-dark:bg-gray-700 tw-dark:border-gray-600 tw-dark:placeholder-gray-400" type="file" @change="updateFile">
+                            </div>
                             <div class="text-end mt-2">
                                 <small class="text-danger me-2" v-if="cantSaveMessage">{{ cantSaveMessage }}</small>
                                 <button class="btn btn-dark" @click="saveClassification"
@@ -104,7 +108,8 @@ const DEFAULT_CLASSIFIABLE = {
 const DEFAULT_CLASSIFICATION = {
     comment: null,
     value: null,
-    classifiable_item_id: null
+    classifiable_item_id: null,
+    file: null
 };
 
 export default {
@@ -194,7 +199,15 @@ export default {
             this.classification.classifiable_item_id = this.classifiableItem.id;
             this.request++;
 
-            classificationService.save(this.classification).then((response) => {
+            const payload = new FormData();
+
+            payload.append('file', this.classification.file);
+            payload.append('comment', this.classification.comment);
+            payload.append('classifiable_item_id', this.classification.classifiable_item_id);
+            payload.append('value', this.classification.value);
+
+
+            classificationService.save(payload).then((response) => {
                 if (response.data && response.data.data && response.data.data.id) {
                     this.$notification.success('Sucesso!', 'Avaliação salva');
                     this.classification = {...DEFAULT_CLASSIFICATION};
@@ -208,19 +221,26 @@ export default {
             this.newClassifiableItem.classification_type_id = this.classificationType.id;
 
             classifiableItemService.save(this.newClassifiableItem).then((response) => {
-
                 if (response.data && response.data.data && response.data.data.id) {
                     this.$notification.success('Sucesso!', this.typeName + ' salvo(a)');
 
                     router.get('/classificado/' + response.data.data.id);
                 }
             }).catch(() => {
-                this.$notification.error('Erro!', 'Não foi possível salvar o(a) '.this.typeName);
+                this.$notification.error('Erro!', 'Não foi possível salvar o(a) ' + this.typeName);
             })
         },
 
         applySearch(value) {
             this.filters.search = value;
+        },
+
+        updateFile(event){
+            const file = event?.target?.files[0] ?? null;
+
+            if(file){
+                this.classification.file = file;
+            }
         }
     }
 

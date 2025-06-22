@@ -12,6 +12,7 @@
                     </div>
 
                     <p class="text-secondary-emphasis">{{ item.comment }}</p>
+                    <a v-if="item.file" class="small text-secondary mt-2 tw-cursor-pointer" @click="downloadFile(item.id)">{{ item.file }}</a>
                 </div>
                 <div class="col-4 text-end">
                     <span v-if="!item.valid" class="text-danger bg-danger-subtle rounded p-2 fw-bold me-2">Removida</span>
@@ -138,6 +139,15 @@ export default {
                     this.$refs.usefulButton.blur();
                 }
             });
+        },
+        downloadFile(id){
+            this.requests++;
+
+            classificationService.downloadFile(id).then((response) => {
+                window.open(response.data.url, '_blank');
+            }).catch((error) => {
+               this.$notification.error('Erro', error?.response?.data?.message);
+            }).then(() => this.requests--)
         }
     }
 }
